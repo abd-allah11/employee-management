@@ -3,7 +3,9 @@ package com.wd_aljak.employee_management.services;
 import com.wd_aljak.employee_management.abstracts.EmployeeService;
 import com.wd_aljak.employee_management.dtos.EmployeeCreateDTO;
 import com.wd_aljak.employee_management.dtos.EmployeeUpdateDTO;
+import com.wd_aljak.employee_management.model.Department;
 import com.wd_aljak.employee_management.model.Employee;
+import com.wd_aljak.employee_management.repo.DepartmentRepo;
 import com.wd_aljak.employee_management.repo.EmployeeRepo;
 import com.wd_aljak.employee_management.shared.CustomResponseException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,9 @@ import java.util.UUID;
 public class EmployeeServiceImpl implements EmployeeService {
     @Autowired
     EmployeeRepo employeeRepo;
+
+    @Autowired
+    DepartmentRepo departmentRepo;
 
     @Override
     public List<Employee> findAll() {
@@ -33,6 +38,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Employee createOne(EmployeeCreateDTO employeeCreate) {
         Employee employee = new Employee();
+        Department department = departmentRepo.findById(employeeCreate.departmentId())
+                .orElseThrow(() -> CustomResponseException.ResponseNotFound(
+                        "Employee with id -> " + employeeCreate.departmentId() + "Not found"));
 
         employee.setFirstName(employeeCreate.firstName());
         employee.setLastName(employeeCreate.lastName());
@@ -40,6 +48,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         employee.setPhoneNumber(employeeCreate.phoneNumber());
         employee.setEmail(employeeCreate.email());
         employee.setPosition(employeeCreate.position());
+        employee.setDepartment(department);
         employeeRepo.save(employee);
         return employee;
     }

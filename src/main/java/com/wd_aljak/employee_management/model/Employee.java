@@ -1,9 +1,7 @@
 package com.wd_aljak.employee_management.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -42,7 +40,12 @@ public class Employee {
     @Column(name = "position", nullable = false)
     private String position;
 
-    @Column(name = "department_id", nullable = false)
-    private UUID departmentId = UUID.randomUUID();
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "department_id", nullable = false)
+    @JsonProperty("departmentId")
+    private Department department;
 
+    public UUID getDepartment() {
+        return department.getId();
+    }
 }
