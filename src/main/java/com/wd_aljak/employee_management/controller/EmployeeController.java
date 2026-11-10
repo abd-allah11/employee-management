@@ -11,7 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -21,8 +21,8 @@ public class EmployeeController {
     EmployeeServiceImpl employeeService;
 
     @GetMapping
-    public ResponseEntity<GlobalResponse<ArrayList<Employee>>> findall() {
-        ArrayList<Employee> employees = employeeService.findAll();
+    public ResponseEntity<GlobalResponse<List<Employee>>> findall() {
+        List<Employee> employees = employeeService.findAll();
         return new ResponseEntity<>(new GlobalResponse<>(employees), HttpStatus.OK);
     }
 
