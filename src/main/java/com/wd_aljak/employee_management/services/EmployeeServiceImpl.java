@@ -23,6 +23,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Autowired
     DepartmentRepo departmentRepo;
 
+
     @Override
     public List<Employee> findAll() {
         return employeeRepo.findAll();

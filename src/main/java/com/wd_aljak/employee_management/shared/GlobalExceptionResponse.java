@@ -31,4 +31,5 @@ public class GlobalExceptionResponse {
                 .toList();
         return new ResponseEntity<>(new GlobalResponse<>(errors), HttpStatus.BAD_REQUEST);
     }
+
 }
