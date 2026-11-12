@@ -2,7 +2,7 @@ package com.wd_aljak.employee_management.dtos;
 
 import jakarta.validation.constraints.*;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.UUID;
 
 public record EmployeeCreateDTO(
@@ -24,7 +24,7 @@ public record EmployeeCreateDTO(
 
         @NotNull(message = "hireDate is required")
         @PastOrPresent(message = "cant be in future")
-        Date hireDate,
+        LocalDate hireDate,
 
         @NotBlank(message = "position is required")
         @Size(min = 2, max = 20, message = "min is 2 ,max is 20")

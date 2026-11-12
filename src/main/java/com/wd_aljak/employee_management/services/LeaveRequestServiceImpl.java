@@ -34,6 +34,10 @@ public class LeaveRequestServiceImpl implements LeaveRequestService {
                         )
                 );
 
+        if (leaveRequestCreate.endDate().isBefore(leaveRequestCreate.startDate())) {
+            throw CustomResponseException.BadRequest("End date must be on or after start date");
+        }
+
         LeaveRequest leaveRequest = new LeaveRequest();
 
         leaveRequest.setState("PENDING");

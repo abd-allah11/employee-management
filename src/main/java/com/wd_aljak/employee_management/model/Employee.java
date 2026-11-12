@@ -8,10 +8,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.UuidGenerator;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
+@Table(name = "employee")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -22,30 +23,39 @@ public class Employee {
     @UuidGenerator
     private UUID id;
 
-    @Column(name = "first_name", nullable = false, length = 50)
+    @Column(name = "first_name", nullable = false, length = 100)
     private String firstName;
 
-    @Column(name = "last_name", nullable = false, length = 50)
+    @Column(name = "last_name", nullable = false, length = 100)
     private String lastName;
 
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 
-    @Column(name = "phone_number", nullable = false, unique = true)
+    @Column(name = "phone_number", length = 25)
     private String phoneNumber;
 
     @Column(name = "hire_date", nullable = false)
-    private Date hireDate;
+    private LocalDate hireDate;
 
     @Column(name = "position", nullable = false)
     private String position;
 
+    @Column(name = "is_verified", columnDefinition = "BOOLEAN DEFAULT FALSE", nullable = false)
+    private boolean isVerified;
+
+    @Column(name = "account_creation_token")
+    private String accountCreationToken;
+
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "department_id", nullable = false)
-    @JsonProperty("departmentId")
+    @com.fasterxml.jackson.annotation.JsonIgnore
     private Department department;
 
-    public UUID getDepartment() {
-        return department.getId();
+    @JsonProperty("departmentId")
+    public UUID getDepartmentId() {
+        return department != null ? department.getId() : null;
     }
+
 }

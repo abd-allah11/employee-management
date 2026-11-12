@@ -6,7 +6,7 @@ import jakarta.validation.constraints.Size;
 
 import java.util.UUID;
 
-public record SingupRequest(
+public record SignupRequest(
         @NotBlank(message = "Username is required")
         @Size(min = 2, max = 20, message = "min is 2 ,max is 20")
         String username,

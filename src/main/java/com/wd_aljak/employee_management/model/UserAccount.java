@@ -1,6 +1,5 @@
 package com.wd_aljak.employee_management.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,10 +10,10 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.UUID;
 
 @Entity
+@Table(name = "user_account")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -25,25 +24,21 @@ public class UserAccount implements UserDetails {
     @UuidGenerator
     private UUID id;
 
-    @Column(name = "username", nullable = false, unique = true, length = 50)
+    @Column(name = "username", unique = true, nullable = false, length = 100)
     private String username;
 
-    @Column(name = "password", nullable = false, length = 50)
+    @Column(name = "password", nullable = false, length = 100)
     private String password;
 
-    @Column(name = "email", nullable = false, unique = true)
-    private String email;
-
-    @Column(name = "role", nullable = false, unique = true)
+    @Column(name = "role", nullable = false, length = 20)
     private String role = "USER";
 
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "department_id", unique = true, nullable = false)
-    @JsonProperty("employee_id")
+    @OneToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "employee_id", unique = true, nullable = false)
     private Employee employee;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        return java.util.List.of(new org.springframework.security.core.authority.SimpleGrantedAuthority("ROLE_" + role));
     }
 }
