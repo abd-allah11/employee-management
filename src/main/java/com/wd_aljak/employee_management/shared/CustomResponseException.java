@@ -13,4 +13,8 @@ public class CustomResponseException extends RuntimeException {
         return new CustomResponseException(404, message);
     }
 
+    public static CustomResponseException BadCreadentials() {
+        return new CustomResponseException(404, "Bad Creadentials");
+    }
+
 }
