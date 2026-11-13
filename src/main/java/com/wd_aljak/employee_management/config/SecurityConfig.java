@@ -51,6 +51,13 @@ public class SecurityConfig {
                 })
                 .csrf(AbstractHttpConfigurer::disable)
                 .authenticationManager(authenticationManager)
+                .authorizeHttpRequests(auth ->
+                        auth.requestMatchers(
+                                "/auth/singup",
+                                "/auth/login",
+                                "/auth/forgot-password/{username}",
+                                "/auth//reset-password"
+                        ))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/signup", "/auth/login").permitAll()

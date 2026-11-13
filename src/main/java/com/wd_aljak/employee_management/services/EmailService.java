@@ -27,12 +27,12 @@ public class EmailService {
     }
 
     public void sendPasswordRestEmail(String to, String token) {
-        String link = ORIGIN + "/reset-password?token=" + token;
+        String link = ORIGIN + "/auth/reset-password?token=" + token;
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom(from);
         message.setTo(to);
         message.setSubject("Rest Your Password!");
-        message.setText("Hi! Click the link below to reset your password: \n" + link);
+        message.setText("Hi..! Click the link below to reset your password :\n" + link);
         mailSender.send(message);
     }
 }

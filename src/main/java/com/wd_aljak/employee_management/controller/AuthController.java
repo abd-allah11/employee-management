@@ -1,6 +1,7 @@
 package com.wd_aljak.employee_management.controller;
 
 import com.wd_aljak.employee_management.dtos.LoginRequest;
+import com.wd_aljak.employee_management.dtos.ResetPasswordRequest;
 import com.wd_aljak.employee_management.dtos.SignupRequest;
 import com.wd_aljak.employee_management.services.AuthService;
 import com.wd_aljak.employee_management.shared.GlobalResponse;
@@ -36,5 +37,20 @@ public class AuthController {
         authService.signup(signupRequest, token);
         System.out.println(token);
         return new ResponseEntity<>(new GlobalResponse<>("Signed Up"), HttpStatus.CREATED);
+    }
+
+    @PostMapping("/forgot-password/{username}")
+    public ResponseEntity<GlobalResponse<String>> forgotPassword(@PathVariable String username) {
+
+        authService.initiatePasswordRest(username);
+        return new ResponseEntity<>(new GlobalResponse<>("Password reset email sent!"), HttpStatus.CREATED);
+    }
+
+    @PostMapping("/reset-password")
+    public ResponseEntity<GlobalResponse<String>> resetPassword(
+            @RequestBody ResetPasswordRequest resetPasswordRequest
+    ) {
+        authService.resetPassword(resetPasswordRequest);
+        return new ResponseEntity<>(new GlobalResponse<>("Password reset successfully!"), HttpStatus.CREATED);
     }
 }
