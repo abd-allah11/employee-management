@@ -9,9 +9,11 @@ import com.wd_aljak.employee_management.repo.DepartmentRepo;
 import com.wd_aljak.employee_management.repo.EmployeeRepo;
 import com.wd_aljak.employee_management.shared.CustomResponseException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -28,8 +30,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 
     @Override
-    public List<Employee> findAll() {
-        return employeeRepo.findAll();
+    public Page<Employee> findAll(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return employeeRepo.findAll(pageable);
     }
 
     @Override

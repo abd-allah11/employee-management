@@ -3,13 +3,13 @@ package com.wd_aljak.employee_management.abstracts;
 import com.wd_aljak.employee_management.dtos.EmployeeCreateDTO;
 import com.wd_aljak.employee_management.dtos.EmployeeUpdateDTO;
 import com.wd_aljak.employee_management.model.Employee;
+import org.springframework.data.domain.Page;
 
-import java.util.List;
 import java.util.UUID;
 
 public interface EmployeeService {
 
-    List<Employee> findAll();
+    Page<Employee> findAll(int page, int size);
 
     Employee findOne(UUID employeeId);
 
