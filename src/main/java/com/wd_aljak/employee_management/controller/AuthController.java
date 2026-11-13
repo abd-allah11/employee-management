@@ -34,6 +34,7 @@ public class AuthController {
     ) {
 
         authService.signup(signupRequest, token);
+        System.out.println(token);
         return new ResponseEntity<>(new GlobalResponse<>("Signed Up"), HttpStatus.CREATED);
     }
 }

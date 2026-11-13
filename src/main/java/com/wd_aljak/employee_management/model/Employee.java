@@ -40,7 +40,7 @@ public class Employee {
 
     @Column(name = "position", nullable = false)
     private String position;
-
+   
     @Column(name = "is_verified", columnDefinition = "BOOLEAN DEFAULT FALSE", nullable = false)
     private boolean isVerified;
 

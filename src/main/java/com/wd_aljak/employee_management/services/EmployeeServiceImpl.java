@@ -23,6 +23,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Autowired
     DepartmentRepo departmentRepo;
 
+    @Autowired
+    private EmailService emailService;
+
 
     @Override
     public List<Employee> findAll() {
@@ -43,6 +46,10 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .orElseThrow(() -> CustomResponseException.ResponseNotFound(
                         "Employee with id -> " + employeeCreate.departmentId() + "Not found"));
 
+        String token = UUID.randomUUID().toString();
+        employee.setVerified(false);
+        employee.setAccountCreationToken(token);
+
         employee.setFirstName(employeeCreate.firstName());
         employee.setLastName(employeeCreate.lastName());
         employee.setHireDate(employeeCreate.hireDate());
@@ -51,6 +58,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         employee.setPosition(employeeCreate.position());
         employee.setDepartment(department);
         employeeRepo.save(employee);
+        emailService.sendAccountCreationEmail(employee.getEmail(), token);
         return employee;
     }
 
@@ -71,6 +79,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         existEmployee.setPosition(employee.position());
         existEmployee.setPhoneNumber(employee.phoneNumber());
         employeeRepo.save(existEmployee);
+
 
         return existEmployee;
     }

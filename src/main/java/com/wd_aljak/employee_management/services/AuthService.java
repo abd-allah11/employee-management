@@ -44,12 +44,11 @@ public class AuthService {
         account.setPassword(passwordEncoder.encode(signupRequest.password()));
         account.setEmployee(employee);
         userAccountRepo.save(account);
-
+        System.out.println(token);
         employee.setVerified(true);
         employee.setAccountCreationToken(null);
         employeeRepo.save(employee);
     }
-
 
     public String login(LoginRequest loginRequest) {
         authenticationManager.authenticate(
@@ -58,7 +57,6 @@ public class AuthService {
                         loginRequest.password()
                 )
         );
-
         UserAccount user = userAccountRepo.findOneByUsername(loginRequest.username())
                 .orElseThrow(() -> CustomResponseException.BadCredentials());
 

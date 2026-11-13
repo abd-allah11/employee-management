@@ -45,7 +45,10 @@ public class SecurityConfig {
             AuthenticationManager authenticationManager
     ) throws Exception {
         http
-                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .cors(c -> {
+                    CorsConfigurationSource source = corsConfigurationSource();
+                    c.configurationSource(source);
+                })
                 .csrf(AbstractHttpConfigurer::disable)
                 .authenticationManager(authenticationManager)
                 .authorizeHttpRequests(auth -> auth

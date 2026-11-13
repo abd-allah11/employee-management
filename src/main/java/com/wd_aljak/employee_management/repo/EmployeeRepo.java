@@ -9,5 +9,5 @@ import java.util.UUID;
 
 @Repository
 public interface EmployeeRepo extends JpaRepository<Employee, UUID> {
-    Optional<Employee> findOneByAccountCreationToken(String token);
+    Optional<Employee> findOneByAccountCreationToken(String findOneByAccountCreationToken);
 }
